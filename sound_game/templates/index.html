@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Sound Clicker</title>
+    <title>Finanz- & Spar-Simulator</title>
     <style>
         body {
-            background-color: #0b0c10;
-            color: #66fcf1;
+            background-color: #0f172a;
+            color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
@@ -16,92 +16,98 @@
             height: 100vh;
             margin: 0;
         }
-        h1 { text-shadow: 0 0 10px #66fcf1; }
-        .score-board { font-size: 2rem; margin-bottom: 20px; color: #1f2833; background: #66fcf1; padding: 10px 20px; border-radius: 10px; box-shadow: 0 0 20px #66fcf1; font-weight: bold; }
-        .click-btn { background: transparent; border: 3px solid #45f3ff; color: #45f3ff; padding: 20px 40px; font-size: 1.5rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: all 0.2s ease; box-shadow: 0 0 15px #45f3ff; margin-bottom: 30px; }
-        .click-btn:hover { background: #45f3ff; color: #0b0c10; scale: 1.05; box-shadow: 0 0 30px #45f3ff; }
-        .click-btn:active { scale: 0.95; }
-        .shop-container { background: #1f2833; padding: 20px; border-radius: 15px; border: 1px solid #45f3ff; text-align: center; }
-        .shop-btn { background: #45f3ff; color: #0b0c10; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        .shop-btn:disabled { background: #555; color: #888; cursor: not-allowed; }
+        .form-container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            width: 350px;
+        }
+        h2 { text-align: center; color: #38bdf8; margin-top: 0; }
+        .input-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+        label { margin-bottom: 8px; font-size: 0.95rem; color: #94a3b8; }
+        input {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #fff;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            outline: none;
+        }
+        input:focus { border-color: #38bdf8; }
+        .calc-btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .calc-btn:hover { background: #0ea5e9; }
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: #0f172a;
+            border-left: 4px solid #38bdf8;
+            border-radius: 4px;
+            display: none;
+            text-align: center;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Cyber Sound Clicker</h1>
-    <div class="score-board">Beats: <span id="score">0</span></div>
-    
-    <button class="click-btn" id="clickMe">PRODUZIERE BEATS</button>
-
-    <div class="shop-container">
-        <h3>⚡ DJ-Zubehör-Shop</h3>
-        <p>Auto-Beatmaker: <span id="helper-count">0</span></p>
-        <button class="shop-btn" id="buyUpgrade">Kaufe Auto-Beatmaker (Kosten: <span id="cost">10</span>)</button>
+    <div class="form-container">
+        <h2>📈 Spar-Simulator</h2>
+        
+        <div class="input-group">
+            <label>Aktuelles Startkapital (€):</label>
+            <input type="number" id="start" value="1000">
+        </div>
+        
+        <div class="input-group">
+            <label>Monatliche Sparrate (€):</label>
+            <input type="number" id="rate" value="200">
+        </div>
+        
+        <div class="input-group">
+            <label>Gewünschte Zielsumme (€):</label>
+            <input type="number" id="ziel" value="5000">
+        </div>
+        
+        <button class="calc-btn" id="calcBtn">Sparzeit berechnen</button>
+        
+        <div class="result-box" id="resultBox">
+            Du brauchst genau <strong id="monthsOutput" style="color: #38bdf8;">0</strong> Monate!
+        </div>
     </div>
 
     <script>
-        let currentBeats = 0;
-        const scoreDisplay = document.getElementById('score');
-        const button = document.getElementById('clickMe');
-        const upgradeBtn = document.getElementById('buyUpgrade');
-        const helperDisplay = document.getElementById('helper-count');
-        const costDisplay = document.getElementById('cost');
+        document.getElementById('calcBtn').addEventListener('click', () => {
+            const startkapital = document.getElementById('start').value;
+            const sparrate = document.getElementById('rate').value;
+            const zielsumme = document.getElementById('ziel').value;
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        function playSound(freq) {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
-
-        // Klick auf den Hauptbutton
-        button.addEventListener('click', () => {
-            playSound(150 + (currentBeats * 0.5));
-            
-            fetch('/klick', { method: 'POST' })
-                .then(res => res.json())
-                .then(data => {
-                    currentBeats = data.beats;
-                    scoreDisplay.innerText = currentBeats;
-                });
+            // JavaScript schickt die Zahlen per POST an deine Python-Route '/berechne'
+            fetch('/berechne', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ startkapital, sparrate, zielsumme })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Das Ergebnis aus deiner Python-Schleife wird hier angezeigt!
+                document.getElementById('monthsOutput').innerText = data.monate;
+                document.getElementById('resultBox').style.display = 'block';
+            });
         });
-
-        // Klick auf das Upgrade
-        upgradeBtn.addEventListener('click', () => {
-            fetch('/kaufe_upgrade', { method: 'POST' })
-                .then(res => res.json())
-                .then(data => {
-                    if(data.erfolg) {
-                        playSound(440); // Hoher Bestätigungston
-                        scoreDisplay.innerText = data.spielstand.beats;
-                        helperDisplay.innerText = data.spielstand.auto_clicker;
-                        costDisplay.innerText = data.spielstand.upgrade_kosten;
-                        currentBeats = data.spielstand.beats;
-                    }
-                });
-        });
-
-        // Automatischer Takt jede Sekunde (für die Auto-Beatmaker)
-        setInterval(() => {
-            let helpers = parseInt(helperDisplay.innerText);
-            if (helpers > 0) {
-                playSound(80); // Tiefer Bass für automatische Beats!
-                fetch('/klick', { method: 'POST' })
-                    .then(res => res.json())
-                    .then(data => {
-                        currentBeats = data.beats;
-                        scoreDisplay.innerText = currentBeats;
-                    });
-            }
-        }, 1000);
     </script>
 </body>
 </html>
