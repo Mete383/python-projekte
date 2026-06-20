@@ -1,34 +1,43 @@
-### Hallo, ich bin [Mete]
-Willkommen auf meinem GitHub-Profil! Hier präsentiere ich meine Sammlung von Python-Projekten, die von praktischen Alltagshelfern bis hin zu Sicherheits-Tools reichen.
+### Hi there, I'm Mete! 👋
 
-### 🐍 Meine Python-Projekte
+Welcome to my GitHub profile! I am a 16-year-old self-taught developer showcasing my collection of Python projects, ranging from practical daily helpers to security tools and web applications.
 
-### 🔐 Passwort Manager
+### 🐍 My Python Projects
 
-Ein sicheres Tool zum Verwalten von Zugangsdaten.
+### 📝 Code Snippet Manager *(New)*
 
-*   **Kernfunktionen:** Generierung sicherer Passwörter, Verschlüsselung, Suche nach Einträgen.
-*   **Tech-Stack:** Python, Cryptography-Bibliothek, SQLite.
+A lightweight web application to store, organize, and view your favorite reusable code blocks.
 
-### 💰 Spar-Simulator
+*   **Key Features:** Web-based form input, dynamic snippet listing, and pre-formatted code layout.
+*   **Tech Stack:** Python, Flask, Jinja2 Templating, HTML5.
 
-Ein interaktiver Finanzrechner für langfristige Sparziele.
+### 🔐 Password Manager
 
-*   **Kernfunktionen:** Berechnung von Zinseszinsen, monatlichen Sparraten und Laufzeiten.
-*   **Tech-Stack:** Python, Tkinter (GUI) / CustomTkinter.
+A secure desktop application designed to store and manage user credentials safely.
 
-### 🍕 Pizza Zutaten-Rechner
+*   **Key Features:** Generation of secure passwords, data encryption, and entry search.
+*   **Tech Stack:** Python, Cryptography library, SQLite.
 
-Der perfekte Küchenhelfer für die Teig- und Belagskalkulation.
+### 💰 Savings Simulator & Doener-Clicker
 
-*   **Kernfunktionen:** Skalierung von Zutatenmengen basierend auf Personenanzahl oder Pizzagröße.
+An interactive finance calculator for long-term savings goals paired with a fun clicker game.
+
+*   **Key Features:** Compound interest calculation, monthly savings rate projections, and an incremental clicker mechanism.
+*   **Tech Stack:** Python, Tkinter / CustomTkinter.
+
+### 🍕 Pizza Ingredients Calculator
+
+The perfect kitchen assistant for calculating dough formulas and topping quantities.
+
+*   **Key Features:** Scaling of ingredient amounts based on the number of people or pizza sizes.
+*   **Tech Stack:** Python, Logic-based scaling.
 
 ### 🔢 Advanced Counter & 💸 Tip Calculator
 
-*   **Advanced Counter:** Ein erweiterter Zähler mit Speicherfunktion und Statistiken.
-*   **Tip Calculator:** Schnelle Aufteilung von Restaurantrechnungen inklusive Trinkgeldanteil.
+*   **Advanced Counter:** An extended counter featuring data persistence and basic statistics.
+*   **Tip Calculator:** Quick bill splitting for restaurants including customized tip percentages.
 
-### 🛠️ Technologien & Tools
+### 🛠️ Technologies & Tools
 
-*   **Sprachen:** Python 3.x
-*   **Konzepte:** OOP (Objektorientierung), GUI-Entwicklung, Datenverschlüsselung, Datei-Handling (JSON/CSV)
+*   **Languages:** Python 3.x, HTML5, CSS3
+*   **Concepts:** Object-Oriented Programming (OOP), GUI Development, Web Routing, Data Encryption, File Handling (JSON/CSV)
