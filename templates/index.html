@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Snippet Manager</title>
+</head>
+<body>
+
+    <!-- Header-Bereich der Anwendung -->
+    <header>
+        <h1>Code Snippet Manager</h1>
+        <p>Ein leichtgewichtiges Tool zur Verwaltung von Code-Ausschnitten.</p>
+    </header>
+
+    <!-- Hauptinhalt der Webseite -->
+    <main>
+        
+        <!-- Sektion: Formular zum Hinzufügen neuer Snippets -->
+        <section>
+            <h2>Neues Snippet hinzufügen</h2>
+            
+            <!-- action="/add" sendet die Daten an die POST-Route der Flask-App -->
+            <form action="/add" method="POST">
+                
+                <!-- Eingabefeld für den Titel (Pflichtfeld) -->
+                <div>
+                    <label for="title">Titel:</label><br>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <br>
+                
+                <!-- Eingabefeld für die Programmiersprache -->
+                <div>
+                    <label for="language">Programmiersprache:</label><br>
+                    <input type="text" id="language" name="language">
+                </div>
+                <br>
+                
+                <!-- Textbereich für den eigentlichen Programmcode (Pflichtfeld) -->
+                <div>
+                    <label for="code">Code-Inhalt:</label><br>
+                    <textarea id="code" name="code" rows="8" cols="60" required></textarea>
+                </div>
+                <br>
+                
+                <!-- Button zum Absenden des Formulars -->
+                <button type="submit">Snippet speichern</button>
+            </form>
+        </section>
+
+        <!-- Trennlinie zwischen Formular und Anzeige -->
+        <hr>
+
+        <!-- Sektion: Dynamische Anzeige der gespeicherten Snippets -->
+        <section>
+            <h2>Gespeicherte Snippets</h2>
+            
+            <!-- Jinja2-Template-Schleife: Iteriert durch die übergebene Python-Liste -->
+            {% for snippet in snippets %}
+                <article style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+                    <h3>{{ snippet.title }}</h3>
+                    <p><strong>Sprache:</strong> {{ snippet.language }}</p>
+                    
+                    <!-- Das pre- und code-Tag stellt den Code formatiert und mit Zeilenumbrüchen dar -->
+                    <pre><code>{{ snippet.code }}</code></pre>
+                </article>
+            {% else %}
+                <!-- Alternativer Text, falls die Snippet-Liste leer ist -->
+                <p>Noch keine Snippets vorhanden. Erstelle dein erstes Snippet oben!</p>
+            {% endfor %}
+            
+        </section>
+    </main>
+
+</body>
+</html>
